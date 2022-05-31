@@ -85,10 +85,23 @@ function removeLetter(guessNo, letterNo)
     guessLetter--;
 }
 
+function sleep(time)
+{
+    return new Promise((resolve) => setTimeout(resolve, time));
+}
+
 function validateGuess()
 {
-    if (guess.length < 5 || !guessableWords.includes(guess))
+    if (guess.length < 5)
     {
+        return false;
+    } 
+    if (!guessableWords.includes(guess))
+    {
+        document.getElementById(`guess-${guessNo}`).style.animation = "shake 100ms linear";
+        sleep(100).then(() => {
+            document.getElementById(`guess-${guessNo}`).style.animation = "";
+        })
         return false;
     }
     return true;

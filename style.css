@@ -95,3 +95,18 @@ header h1 {
 button[code="Backspace"] {
     width: 60px;
 }
+
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+    33% {
+        transform: translateX(-5px);
+    }
+    66% {
+        transform: translateX(5px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
