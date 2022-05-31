@@ -65,3 +65,33 @@ header h1 {
     font-size: 16px;
     padding: 5px;
 }
+
+.key-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.key {
+    border: none;
+    outline: none;
+    font: inherit;
+    color: inherit;
+
+    height: 50px;
+    min-width: 40px;
+    background-color: grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3px;
+    padding: 10px;
+    border-radius: 2px;
+    user-select: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+button[code="Backspace"] {
+    width: 60px;
+}

@@ -19,15 +19,27 @@ let won = false;
 let finished = false;
 
 document.addEventListener("keydown", (event) => {
+    keydown(event.key, event.code);
+}, false);
+
+let keys = document.getElementsByClassName("key");
+for (let key of keys)
+{
+    key.addEventListener("click", (event) => {
+        keydown(key.children[0].textContent.toLowerCase(), key.attributes["code"].value);
+    });
+}
+
+document.getElementById("play-again").addEventListener("click", () => {
+    window.location.reload();
+});
+
+function keydown(keyName, keyCode)
+{
     if (finished)
     {
         return;
     }
-
-    let keyName = event.key;
-    let keyCode = event.code;
-    // console.log(`Key pressed ${keyName} \r\n Key code value: ${keyCode}`);
-    
     if (keyCode == "Enter")
     {
         if (!validateGuess())
@@ -45,12 +57,7 @@ document.addEventListener("keydown", (event) => {
     {
         removeLetter(guessNo, guessLetter - 1);
     }
-    
-}, false);
-
-document.getElementById("play-again").addEventListener("click", () => {
-    window.location.reload();
-});
+}
 
 function enterLetter(letter, guessNo, letterNo)
 {
@@ -98,6 +105,7 @@ function checkGuess()
         if (guessLetters[i] == answerLetters[i])
         {
             letterDiv.style.backgroundColor = "var(--correctPlaceColor)";
+            document.querySelector(`button[code="Key${guessLetters[i].toUpperCase()}"]`).style.backgroundColor = "var(--correctPlaceColor)";
             guessLetters = replaceAtStr(guessLetters, i, "_");
             answerLetters = replaceAtStr(answerLetters, i, "_");
         }
@@ -105,6 +113,7 @@ function checkGuess()
     for (let i = 0; i < 5; i++)
     {
         let letterDiv = guessRow.querySelector(`:nth-child(${i + 1})`);
+        let key = document.querySelector(`button[code="Key${guessLetters[i].toUpperCase()}"]`);
         if (guessLetters[i] == "_")
         {
             continue;
@@ -112,11 +121,19 @@ function checkGuess()
         else if (answerLetters.includes(guessLetters[i]))
         {
             letterDiv.style.backgroundColor = "var(--incorrectPlaceColor)";
-            answerLetters = replaceAtStr(answerLetters, answerLetters.search(guessLetters[i]), "_")
+            if (key.style.backgroundColor != "var(--correctPlaceColor)")
+            {
+                key.style.backgroundColor = "var(--incorrectPlaceColor)";
+            }
+            answerLetters = replaceAtStr(answerLetters, answerLetters.search(guessLetters[i]), "_");
         }
         else
         {
             letterDiv.style.backgroundColor = "var(--notPresentColor)";
+            if (key.style.backgroundColor != "var(--correctPlaceColor)" && key.style.backgroundColor != "var(--incorrectPlaceColor)")
+            {
+                key.style.backgroundColor = "var(--notPresentColor)";
+            }
         }
     }
     if (guess == answer)
