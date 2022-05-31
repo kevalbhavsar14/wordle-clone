@@ -1,5 +1,5 @@
-import { guessableWords } from "./guessable_words.mjs"
-import { answerWords } from "./answer_words.mjs"
+import { guessableWords } from "./guessable_words.js"
+import { answerWords } from "./answer_words.js"
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
