@@ -9,6 +9,30 @@ function replaceAtStr(str, index, replacement) {
     return str.substring(0, index) + replacement + str.substring(index + replacement.length);
 }
 
+let darkModeInput = document.getElementById("dark-mode");
+darkModeInput.addEventListener("click", () => {
+    let r = document.querySelector(":root");
+    let dmSwitch = document.querySelector(".switch");
+    if (darkModeInput.checked)
+    {
+        r.style.setProperty("--bgcolor", "rgb(25, 25, 30)");
+        r.style.setProperty("--fgcolor", "white");
+        r.style.setProperty("--correctPlaceColor", "rgb(0, 150, 75)");
+        r.style.setProperty("--incorrectPlaceColor", "rgb(200, 175, 0)");
+        r.style.setProperty("--notPresentColor", "rgb(50, 50, 60)");
+        dmSwitch.classList.remove("off");
+    }
+    else
+    {
+        r.style.setProperty("--bgcolor", "white");
+        r.style.setProperty("--fgcolor", "black");
+        r.style.setProperty("--correctPlaceColor", "rgb(0, 170, 95)");
+        r.style.setProperty("--incorrectPlaceColor", "rgb(220, 195, 50)");
+        r.style.setProperty("--notPresentColor", "rgb(100, 100, 110)");
+        dmSwitch.classList.add("off");
+    }
+});
+
 let guessNo = 1;
 let guessLetter = 1;
 
@@ -25,7 +49,7 @@ document.addEventListener("keydown", (event) => {
 let keys = document.getElementsByClassName("key");
 for (let key of keys)
 {
-    key.addEventListener("click", (event) => {
+    key.addEventListener("click", () => {
         keydown(key.children[0].textContent.toLowerCase(), key.attributes["code"].value);
     });
 }
@@ -122,6 +146,8 @@ function checkGuess()
             guessLetters = replaceAtStr(guessLetters, i, "_");
             answerLetters = replaceAtStr(answerLetters, i, "_");
         }
+        letterDiv.style.color = "white";
+        letterDiv.style.border = "none";
     }
     for (let i = 0; i < 5; i++)
     {
@@ -148,6 +174,7 @@ function checkGuess()
                 key.style.backgroundColor = "var(--notPresentColor)";
             }
         }
+        key.style.color = "white";
     }
     if (guess == answer)
     {
